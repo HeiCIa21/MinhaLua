@@ -1,0 +1,584 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nosso Luar</title>
+<style>
+:root {
+    --moon-white: #F0F8FF;
+    --moon-blue: #89CFF0;
+    --sky-dark: #0D1B2A;
+    --sky-mid: #1B263B;
+    --sky-lavender: #2E4057;
+    --star-yellow: #FFEAA7;
+    --accent: #A2D2FF;
+}
+
+/* Reset e fontes */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    background: linear-gradient(to bottom, var(--sky-dark), var(--sky-mid), var(--sky-lavender));
+    min-height: 100vh;
+    overflow-x: hidden;
+    color: white;
+    transition: all 0.5s ease;
+}
+
+/* Container principal */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
+    position: relative;
+    z-index: 2;
+    animation: fadeIn 2s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+/* Header */
+header {
+    text-align: center;
+    padding: 2rem 0;
+}
+
+h1 {
+    font-size: 3.5rem;
+    margin-bottom: 1rem;
+    background: linear-gradient(to right, #FFFFFF, #A2D2FF, #F0F8FF);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: glow 2s infinite alternate;
+    text-shadow: 0 0 10px #A2D2FF, 0 0 20px #F0F8FF, 0 0 30px #FFFFFF;
+}
+
+@keyframes glow {
+    0% { text-shadow: 0 0 15px #FFFFFF, 0 0 25px #A2D2FF, 0 0 35px #F0F8FF; }
+    50% { text-shadow: 0 0 25px #FFFFFF, 0 0 35px #A2D2FF, 0 0 45px #F0F8FF; }
+    100% { text-shadow: 0 0 35px #FFFFFF, 0 0 45px #A2D2FF, 0 0 55px #F0F8FF; }
+}
+
+.header-subtitle {
+    font-size: 1.2rem;
+    font-style: italic;
+    opacity: 0;
+    animation: fadeInSlideUp 1.5s ease forwards 1s;
+}
+
+@keyframes fadeInSlideUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Lua */
+.moon-container {
+    position: absolute;
+    top: 25%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 250px;
+    height: 250px;
+    z-index: 1;
+    filter: drop-shadow(0 0 20px rgba(255, 255, 255, 0.5));
+}
+
+.moon {
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle at 30% 30%, var(--moon-white), var(--moon-blue));
+    border-radius: 50%;
+    animation: moonPulse 4s infinite alternate;
+}
+
+@keyframes moonPulse {
+    0% { transform: scale(1); opacity: 0.95; }
+    100% { transform: scale(1.05); opacity: 1; }
+}
+
+/* Conteúdo principal */
+.main-content {
+    text-align: center;
+    margin: 4rem 0;
+    padding: 3rem 2rem;
+    background-color: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(8px);
+    border-radius: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    animation: float 6s ease-in-out infinite;
+}
+
+@keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-20px); }
+}
+
+.romantic-text {
+    font-size: 2rem;
+    line-height: 1.4;
+    margin-bottom: 2rem;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
+}
+
+.invite-button {
+    background: linear-gradient(45deg, var(--moon-blue), var(--accent));
+    color: white;
+    border: none;
+    padding: 1.2rem 3rem;
+    font-size: 1.5rem;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 5px 15px rgba(162, 210, 255, 0.4);
+    position: relative;
+    overflow: hidden;
+    animation: pulseButton 2s infinite;
+}
+
+.invite-button:hover {
+    transform: translateY(-5px) scale(1.05);
+    box-shadow: 0 10px 25px rgba(162, 210, 255, 0.6);
+}
+
+.invite-button:after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+    transform: translateX(-100%);
+    transition: transform 0.6s ease;
+}
+
+.invite-button:hover:after {
+    transform: translateX(100%);
+}
+
+@keyframes pulseButton {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.03); }
+}
+
+/* Estrelas */
+.stars {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 0;
+}
+
+.star {
+    position: absolute;
+    width: 2px;
+    height: 2px;
+    background: var(--star-yellow);
+    border-radius: 50%;
+    opacity: 0.8;
+    animation: twinkle 2s infinite alternate;
+}
+
+@keyframes twinkle {
+    from { opacity: 0.3; }
+    to { opacity: 1; }
+}
+
+/* Cometas */
+.comet {
+    position: absolute;
+    width: 3px;
+    height: 80px;
+    background: linear-gradient(to bottom, white, transparent);
+    border-radius: 50%;
+    opacity: 0.7;
+    transform: rotate(45deg);
+    animation: moveComet linear infinite;
+}
+
+@keyframes moveComet {
+    0% { transform: translate(-100px, -100px) rotate(45deg); opacity: 0; }
+    10% { opacity: 1; }
+    90% { opacity: 1; }
+    100% { transform: translate(120vw, 120vh) rotate(45deg); opacity: 0; }
+}
+
+/* Corações */
+.hearts {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 1;
+}
+
+.heart {
+    position: absolute;
+    font-size: 1.5rem;
+    color: rgba(162, 210, 255, 0.7);
+    animation: floatDown 10s linear infinite;
+    user-select: none;
+}
+
+@keyframes floatDown {
+    0% {
+        transform: translateY(-100px) rotate(0deg);
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(calc(100vh + 100px)) rotate(360deg);
+        opacity: 0;
+    }
+}
+
+/* Footer */
+footer {
+    text-align: center;
+    padding: 2rem;
+    font-style: italic;
+    font-size: 1.1rem;
+    margin-top: 3rem;
+    opacity: 0;
+    animation: fadeIn 2s ease forwards 0.5s;
+}
+
+/* Footer animado */
+#romanticLyrics {
+    font-style: italic;
+    font-size: 1.2rem;
+    line-height: 1.6;
+    text-align: center;
+    white-space: pre-line;
+    color: #A2D2FF;
+    opacity: 0;
+    animation: fadeInFooter 2s forwards 1s;
+}
+
+/* Fade-in geral do footer */
+@keyframes fadeInFooter {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+/* Player */
+.music-player {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background-color: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    padding: 10px;
+    border-radius: 50px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    z-index: 100;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.play-button {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: linear-gradient(45deg, var(--moon-blue), var(--accent));
+    border: none;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.play-button:hover {
+    transform: scale(1.1);
+}
+
+.music-info {
+    max-width: 0;
+    overflow: hidden;
+    white-space: nowrap;
+    transition: max-width 0.5s ease, opacity 0.3s ease;
+    opacity: 0;
+}
+
+.music-player:hover .music-info {
+    max-width: 200px;
+    opacity: 1;
+    padding-right: 10px;
+}
+
+/* Modal */
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    z-index: 1000;
+    align-items: center;
+    justify-content: center;
+}
+
+.modal-content {
+    background: linear-gradient(135deg, rgba(240,248,255,0.9), rgba(162,210,255,0.7));
+    padding: 2rem;
+    border-radius: 20px;
+    text-align: center;
+    max-width: 500px;
+    width: 90%;
+    position: relative;
+    color: #333;
+    animation: modalFadeIn 0.5s ease-out;
+}
+
+@keyframes modalFadeIn {
+    from { opacity: 0; transform: translateY(-50px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.close-modal {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: #555;
+}
+
+.modal-title {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+    color: var(--moon-blue);
+}
+
+.modal-buttons {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+    margin-top: 2rem;
+}
+
+.modal-button {
+    padding: 0.8rem 1.5rem;
+    border-radius: 50px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: none;
+}
+
+.whatsapp-button {
+    background: linear-gradient(45deg, #25D366, #128C7E);
+    color: white;
+}
+
+.cancel-button {
+    background: white;
+    color: #555;
+    border: 1px solid #ddd;
+}
+
+@media (max-width: 768px) {
+    h1 { font-size: 2.5rem; }
+    .romantic-text { font-size: 1.5rem; }
+    .invite-button { padding: 1rem 2rem; font-size: 1.2rem; }
+    .moon-container { width: 180px; height: 180px; }
+}
+</style>
+</head>
+<body>
+
+<div class="stars" id="star-container"></div>
+<div class="hearts" id="heart-container"></div>
+<div class="moon-container">
+    <div class="moon"></div>
+</div>
+
+<div class="container">
+<header>
+    <h1 class="title">Nosso Luar</h1>
+    <p class="header-subtitle">Cada luar nos lembra que a magia existe nas noites estreladas... e em cada sonho compartilhado.</p>
+</header>
+
+<div class="main-content">
+    <div class="romantic-text">
+        Assim como a luz suave da lua ilumina a noite,<br>
+        seu amor ilumina minha vida com brilho que nunca imaginei ver.<br>
+        Vamos contemplar juntos nosso próprio luar?
+    </div>
+    <button class="invite-button" id="inviteButton">Quero dar xeirin de cachorro</button>
+</div>
+
+<footer>
+    <p id="romanticLyrics"></p>
+</footer>
+
+</div>
+
+<div class="music-player">
+    <button class="play-button" id="playButton">▶</button>
+    <div class="music-info">Clareia - Lua Azul</div>
+</div>
+
+<div class="modal" id="inviteModal">
+    <div class="modal-content">
+        <span class="close-modal" id="closeModal">&times;</span>
+        <h2 class="modal-title">Que tal esse luar?</h2>
+        <p>Eu quero muito aproveitar essa noite com você. Vamos aproveitar juntos nosso momento especial?</p>
+        <div class="modal-buttons">
+            <a href="https://wa.me/5589994386200?text=Sim%2C%20vamos%20ver%20o%20luar%20juntos%21" class="modal-button whatsapp-button">Sim, vamos!</a>
+            <button class="modal-button cancel-button">Talvez depois</button>
+        </div>
+    </div>
+</div>
+
+<!-- Áudio -->
+<audio id="backgroundMusic" loop>
+    <source src="audio.mp3" type="audio/mp3">
+    Seu navegador não suporta áudio HTML5.
+</audio>
+
+<script>
+// Criar corações flutuantes
+function createHearts() {
+    const heartContainer = document.getElementById('heart-container');
+    const heartCount = 15;
+    for (let i = 0; i < heartCount; i++) {
+        const heart = document.createElement('div');
+        heart.innerHTML = '❤';
+        heart.classList.add('heart');
+        heart.style.left = `${Math.random() * 100}vw`;
+        heart.style.animationDuration = `${5 + Math.random() * 10}s`;
+        heart.style.animationDelay = `${Math.random() * 5}s`;
+        heartContainer.appendChild(heart);
+    }
+}
+
+// Letra romântica para animação
+const lyrics = `Tá pra nascer um maloqueiro disposto a soltar o dedo só por causa dela
+Aí eu penso o tempo inteiro e até bate o desespero, o que sou eu sem ela?
+Eu danço com a nossa fumaça, me abraça no conversível, segura minha mão`;
+
+function typeLyrics(elementId, text, speed = 50) {
+    const el = document.getElementById(elementId);
+    let index = 0;
+    el.style.opacity = 1; // garante que o fadeIn já ocorreu
+    function type() {
+        if (index < text.length) {
+            el.innerHTML += text.charAt(index) === '\n' ? '<br>' : text.charAt(index);
+            index++;
+            setTimeout(type, speed);
+        }
+    }
+    type();
+}
+
+// Iniciar a animação após o DOM carregar
+document.addEventListener('DOMContentLoaded', () => {
+    typeLyrics('romanticLyrics', lyrics, 50);
+});
+
+// Criar estrelas
+function createStars() {
+    const starContainer = document.getElementById('star-container');
+    const starCount = 70;
+    for (let i = 0; i < starCount; i++) {
+        const star = document.createElement('div');
+        star.classList.add('star');
+        star.style.top = `${Math.random() * 100}%`;
+        star.style.left = `${Math.random() * 100}%`;
+        star.style.width = `${1 + Math.random() * 2}px`;
+        star.style.height = star.style.width;
+        starContainer.appendChild(star);
+    }
+}
+
+// Criar cometas
+function createComets() {
+    const cometCount = 5;
+    for (let i = 0; i < cometCount; i++) {
+        const comet = document.createElement('div');
+        comet.classList.add('comet');
+        comet.style.top = `${Math.random() * 50}%`;
+        comet.style.left = `-${Math.random() * 200}px`;
+        comet.style.animationDuration = `${5 + Math.random() * 5}s`;
+        comet.style.animationDelay = `${Math.random() * 10}s`;
+        document.body.appendChild(comet);
+    }
+}
+
+// Modal
+function setupModal() {
+    const modal = document.getElementById('inviteModal');
+    const btn = document.getElementById('inviteButton');
+    const span = document.getElementById('closeModal');
+    const cancelBtn = document.querySelector('.cancel-button');
+    
+    btn.addEventListener('click', () => {
+        modal.style.display = 'flex';
+        document.body.style.overflow = 'hidden';
+    });
+    
+    span.addEventListener('click', () => {
+        modal.style.display = 'none';
+        document.body.style.overflow = 'auto';
+    });
+    
+    cancelBtn.addEventListener('click', () => {
+        modal.style.display = 'none';
+        document.body.style.overflow = 'auto';
+    });
+    
+    window.addEventListener('click', (event) => {
+        if (event.target === modal) {
+            modal.style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+    });
+}
+
+// Player
+function setupMusicPlayer() {
+    const audio = document.getElementById('backgroundMusic');
+    const playButton = document.getElementById('playButton');
+    let isPlaying = false;
+    
+    playButton.addEventListener('click', () => {
+        isPlaying = !isPlaying;
+        if (isPlaying) {
+            playButton.textContent = '❚❚';
+            audio.play().catch(e => console.log('Audio playback failed:', e));
+        } else {
+            playButton.textContent = '▶';
+            audio.pause();
+        }
+    });
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    createHearts();
+    createStars();
+    createComets();
+    setupModal();
+    setupMusicPlayer();
+});
+</script>
+</body>
+</html>
