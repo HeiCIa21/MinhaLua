@@ -434,7 +434,7 @@ footer {
 
 <div class="music-player">
     <button class="play-button" id="playButton">▶</button>
-    <div class="music-info">Clareia - Lua Azul</div>
+    <div class="music-info">Amor e Fé - Hungria Hip-Hop</div>
 </div>
 
 <div class="modal" id="inviteModal">
@@ -448,13 +448,11 @@ footer {
         </div>
     </div>
 </div>
-
 <!-- Áudio -->
-<audio id="backgroundMusic" loop>
+<audio id="backgroundMusic" autoplay loop muted>
     <source src="audio.mp3" type="audio/mp3">
     Seu navegador não suporta áudio HTML5.
 </audio>
-
 <script>
 // Criar corações flutuantes
 function createHearts() {
@@ -559,16 +557,54 @@ function setupMusicPlayer() {
     const audio = document.getElementById('backgroundMusic');
     const playButton = document.getElementById('playButton');
     let isPlaying = false;
-    
+
+    // Sempre que o usuário clicar no botão, toca ou pausa
     playButton.addEventListener('click', () => {
-        isPlaying = !isPlaying;
         if (isPlaying) {
-            playButton.textContent = '❚❚';
-            audio.play().catch(e => console.log('Audio playback failed:', e));
-        } else {
-            playButton.textContent = '▶';
             audio.pause();
+            playButton.textContent = '▶';
+        } else {
+            audio.play().catch(e => console.log('Falha ao tocar áudio:', e));
+            playButton.textContent = '❚❚';
         }
+        isPlaying = !isPlaying;
+    });
+
+    // Opcional: toca ao clicar em qualquer lugar da página na primeira interação
+    function firstInteraction() {
+        if (!isPlaying) {
+            audio.play().catch(e => console.log('Falha ao tocar áudio:', e));
+            playButton.textContent = '❚❚';
+            isPlaying = true;
+        }
+        document.removeEventListener('click', firstInteraction);
+    }
+
+    document.addEventListener('click', firstInteraction);
+// Tenta iniciar a música automaticamente
+    window.addEventListener('load', () => {
+        audio.play().then(() => {
+            audio.muted = false; // desmuta depois que inicia
+            playButton.textContent = '❚❚';
+            isPlaying = true;
+        }).catch(() => {
+            // se falhar, mantém mutado até o clique
+            playButton.textContent = '▶';
+            isPlaying = false;
+        });
+    });
+
+    playButton.addEventListener('click', () => {
+        if (isPlaying) {
+            audio.pause();
+            playButton.textContent = '▶';
+        } else {
+            audio.play().then(() => {
+                audio.muted = false;
+            });
+            playButton.textContent = '❚❚';
+        }
+        isPlaying = !isPlaying;
     });
 }
 
